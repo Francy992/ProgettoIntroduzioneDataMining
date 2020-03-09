@@ -1,0 +1,212 @@
+install.packages("fpc")
+install.packages("dbscan")
+ 
+ load("C:/Users/franc/Desktop/Git/ProgettoIntroduzioneDataMining/data.RData")
+#Create dataframe from matrix
+ weibulldf <- as.data.frame(weibull.params)
+ lognormdf <- as.data.frame(lognorm.params)
+ weibull50df <- as.data.frame(weibull.params[1:50, 1:2])
+ lognorm50df <- as.data.frame(lognorm.params[1:50, 1:2])
+
+#First kmeans
+ gg1=ggplot(weibull50df,aes(x=weibull50df[1:50, 1:1],y=weibull50df[1:50, 2:2]))+geom_point(size=4)
+ gg1
+
+ km.out=kmeans(weibull50df[,1:2],centers=2,nstart=20)
+ km.out
+
+#Passo i centroidi nell'oggetto originale.
+ weibull50df$cluster = as.factor(km.out$cluster)
+
+#Plotto il risultato tutto di un colore
+ gg2=ggplot(weibull50df,aes(x=weibull50df[1:50, 1:1],y=weibull50df[1:50, 2:2], color = cluster))+geom_point(size=4)
+
+ gg2+geom_point(aes(x=km.out$center[1,1],y=km.out$center[1,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[2,1],y=km.out$center[2,2]),size=5,color="black")+
+     annotate("text", x=km.out$center[1,1],y=km.out$center[1,2]-0.2, label = "Centroid 1")+
+     annotate("text", x=km.out$center[2,1],y=km.out$center[2,2]-0.2, label = "Centroid 2")+
+     ggtitle("k-means clustering, k=2")+ theme(plot.title = element_text(size = rel(2)))
+	 
+	 
+#library("cluster")
+weibullRipulito <- as.data.frame(weibull.params)
+weibullRipulito = weibullRipulito[weibullRipulito$scale < 5000, ]
+
+ # More complex
+ #clusplot(weibullRipulito, km.out$cluster, color=TRUE, shade=TRUE, 
+  # labels=2, lines=0)
+  
+ #------------------------------ 3 
+  km.out=kmeans(weibullRipulito[,1:2],centers=15,nstart=20)
+ km.out
+
+#Passo i centroidi nell'oggetto originale.
+ weibullRipulito$cluster = as.factor(km.out$cluster)
+
+#Plotto il risultato tutto di un colore
+ gg2=ggplot(weibullRipulito,aes(x=weibullRipulito[, 1:1],y=weibullRipulito[, 2:2], color = cluster))+geom_point(size=4)
+
+ gg2+geom_point(aes(x=km.out$center[1,1],y=km.out$center[1,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[2,1],y=km.out$center[2,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[3,1],y=km.out$center[3,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[4,1],y=km.out$center[4,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[5,1],y=km.out$center[5,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[6,1],y=km.out$center[6,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[7,1],y=km.out$center[7,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[8,1],y=km.out$center[8,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[9,1],y=km.out$center[9,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[10,1],y=km.out$center[10,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[11,1],y=km.out$center[11,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[12,1],y=km.out$center[12,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[13,1],y=km.out$center[13,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[14,1],y=km.out$center[14,2]),size=5,color="black")+
+     geom_point(aes(x=km.out$center[15,1],y=km.out$center[15,2]),size=5,color="black")+
+     annotate("text", x=km.out$center[1,1],y=km.out$center[1,2]-0.2, label = "Centroid 1")+
+     annotate("text", x=km.out$center[2,1],y=km.out$center[2,2]-0.2, label = "Centroid 2")+
+     annotate("text", x=km.out$center[3,1],y=km.out$center[3,2]-0.2, label = "Centroid 3")+
+     annotate("text", x=km.out$center[4,1],y=km.out$center[4,2]-0.2, label = "Centroid 4")+
+     annotate("text", x=km.out$center[5,1],y=km.out$center[5,2]-0.2, label = "Centroid 5")+
+     annotate("text", x=km.out$center[6,1],y=km.out$center[6,2]-0.2, label = "Centroid 6")+
+     annotate("text", x=km.out$center[7,1],y=km.out$center[7,2]-0.2, label = "Centroid 7")+
+     annotate("text", x=km.out$center[8,1],y=km.out$center[8,2]-0.2, label = "Centroid 8")+
+     annotate("text", x=km.out$center[9,1],y=km.out$center[9,2]-0.2, label = "Centroid 9")+
+     annotate("text", x=km.out$center[10,1],y=km.out$center[10,2]-0.2, label = "Centroid 10")+
+     annotate("text", x=km.out$center[11,1],y=km.out$center[11,2]-0.2, label = "Centroid 11")+
+     annotate("text", x=km.out$center[12,1],y=km.out$center[12,2]-0.2, label = "Centroid 12")+
+     annotate("text", x=km.out$center[13,1],y=km.out$center[13,2]-0.2, label = "Centroid 13")+
+     annotate("text", x=km.out$center[14,1],y=km.out$center[14,2]-0.2, label = "Centroid 14")+
+     annotate("text", x=km.out$center[15,1],y=km.out$center[15,2]-0.2, label = "Centroid 15")+
+     ggtitle("k-means clustering, k=3")+ theme(plot.title = element_text(size = rel(5)))
+	 
+	 
+	 
+	 
+# DBSCAN - Il valore minpts dovrebbe essere 3 ossia D + 1. Essendo i dati numerosi è stato deciso di assegnare 5.
+install.packages("fpc")
+install.packages("dbscan")
+
+
+#Pulizia database - Infatti vi sono pochi campioni con scale > 5000 ma che plottati graficamente fanno perdere significato al tutto. Rimosis.
+library("fpc")
+
+weibullRipulito <- as.data.frame(weibull.params)
+weibullRipulito = weibullRipulito[weibullRipulito$scale < 5000, ]
+
+# Compute DBSCAN using fpc package
+set.seed(123)
+db <- fpc::dbscan(weibullRipulito, eps = 15, MinPts = 5)
+# Plot DBSCAN results
+plot(db, weibullRipulito, main = "DBSCAN", frame = FALSE)
+
+dbscan::kNNdistplot(weibullRipulito, k =  5)
+
+
+
+
+
+
+#Clustering gerarchico:
+#Ripuliamo i dati.
+weibullRipulito <- as.data.frame(weibull.params)
+weibullRipulito = weibullRipulito[weibullRipulito$scale < 5000, ]
+
+#----Calcoliamo la matrice delle distanze
+dist.weibull=dist(weibullRipulito)
+
+#Applichiamo hclust.
+clust.weibull=hclust(dist.weibull)
+
+#Plottiamo i risultati
+plot(clust.weibull)
+
+
+#Per raggruppare i dati:
+groupss.50 = cutree(clust.weibull,k=50)
+groupss.50
+
+#E sapere quanti elementi per ogni gruppo.
+table(groupss.50)
+
+
+
+
+
+#K-means con calcolo del miglior k:
+install.packages("factoextra")
+install.packages("tidyverse")
+library("tidyverse")
+library("factoextra")
+weibullRipulito <- as.data.frame(weibull.params)
+weibullRipulito = weibullRipulito[weibullRipulito$scale < 5000, ]
+
+k3 <- kmeans(weibullRipulito, centers = 3, nstart = 25)
+k4 <- kmeans(weibullRipulito, centers = 4, nstart = 25)
+k5 <- kmeans(weibullRipulito, centers = 5, nstart = 25)
+k6 <- kmeans(weibullRipulito, centers = 6, nstart = 25)
+k7 <- kmeans(weibullRipulito, centers = 7, nstart = 25)
+k8 <- kmeans(weibullRipulito, centers = 8, nstart = 25)
+
+#Plot diverso dei risultati
+p3 <- fviz_cluster(k3, geom = "point",  data = weibullRipulito) + ggtitle("k = 3")
+p4 <- fviz_cluster(k4, geom = "point",  data = weibullRipulito) + ggtitle("k = 4")
+p5 <- fviz_cluster(k5, geom = "point",  data = weibullRipulito) + ggtitle("k = 5")
+p6 <- fviz_cluster(k6, geom = "point",  data = weibullRipulito) + ggtitle("k = 6")
+p7 <- fviz_cluster(k7, geom = "point",  data = weibullRipulito) + ggtitle("k = 7")
+p8 <- fviz_cluster(k8, geom = "point",  data = weibullRipulito) + ggtitle("k = 8")
+
+library(gridExtra)
+grid.arrange(p3, p4, p5, p6, p7, p8, nrow = 2)
+
+
+
+
+#Funzione per trovare l'andamento di K.
+set.seed(123)
+
+# function to compute total within-cluster sum of square 
+wss <- function(k) {
+  kmeans(weibullRipulito, k, nstart = 10 )$tot.withinss
+}
+
+# Compute and plot wss for k = 1 to k = 15
+k.values <- 1:15
+
+# extract wss for 2-15 clusters
+wss_values <- map_dbl(k.values, wss)
+
+plot(k.values, wss_values,
+       type="b", pch = 19, frame = FALSE, 
+       xlab="Number of clusters K",
+       ylab="Total within-clusters sum of squares")
+	   
+	   
+	   
+	   
+#Traccia cose da scrivere:
+scopo del progetto:
+	Ossia esplorare la correlazione che è presente nelle due matrici attraverso algoritmi di clustering.
+Panoramica tecnologie:
+-	Cosa è R.
+-	 Cosa è il clustering
+	- Gerarchico
+	- DBSCAN
+	- K-means
+- Approccio e risultati ottenuti.
+	- E' stata pulita la matrice andando a tagliare gli outlier, applicati tutte e tre i suddetti algoritmi andando a sottolineare
+	l' attenzione per il calcolo dei parametri, k in k-means, epsilon e minpts per dbscan. Da capire per il clustering gerarchico.
+
+https://www.datanovia.com/en/lessons/dbscan-density-based-clustering-essentials/#parameter-estimation
+Metodo per determinare il valore eps ottimale
+Il metodo proposto qui consiste nel calcolare le distanze k vicine più vicine in una matrice di punti.
+
+L'idea è di calcolare la media delle distanze di ogni punto dai suoi k vicini più vicini. Il valore di k sarà specificato dall'utente e corrisponde a MinPts .
+
+Successivamente, queste k-distanze vengono tracciate in ordine crescente. L'obiettivo è determinare il "ginocchio", che corrisponde al parametro eps ottimale .
+
+Un ginocchio corrisponde a una soglia in cui si verifica un brusco cambiamento lungo la curva della distanza k.
+
+La funzione kNNdistplot () [nel pacchetto dbscan ] può essere usata per disegnare il grafico della distanza k:
+
+
+
+
